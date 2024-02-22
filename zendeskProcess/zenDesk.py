@@ -8,7 +8,7 @@ logging.basicConfig(
     level=logging.INFO,
     datefmt='%Y-%m-%d %H:%M:%S')
 
-logger = logging.getLogger('Zendesk Data')
+logger = logging.getLogger('Zendesk Data Script')
 
 
 def get_ticket_per_users(user_email) -> dict[list]:
