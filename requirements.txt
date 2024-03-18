@@ -1,6 +1,0 @@
-python-dotenv
-requests==2.30.0
-pathlib
-dotenv
-datetime
-
