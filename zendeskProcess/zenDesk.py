@@ -34,10 +34,12 @@ def get_ticket_per_users(user_email) -> dict[list]:
         user_tickets.update({user_email: []})
         for ticket in tickets:
             if ticket['status'] != 'closed':
+                updates = get_ticket_updates(ticket)
                 ticket_data = {
                     'ticket_id': ticket['id'],
                     'subject': ticket['subject'],
-                    'status': ticket['status']
+                    'status': ticket['status'],
+                    'updates': updates
                 }
                 logger.info(f"Ticket ID: {ticket['id']}, Subject: {ticket['subject']}")
                 user_tickets[user_email].append(ticket_data)
@@ -46,6 +48,24 @@ def get_ticket_per_users(user_email) -> dict[list]:
         logger.info(f"Failed to retrieve tickets: {response.status_code}")
     logger.info(f"Fetching tickets for the user {user_email} - COMPLETED")
     return user_tickets
+
+
+def get_ticket_updates(ticket):
+    # ticket_audit_url = f'{bbc().zendesk_base_url}tickets/{ticket["id"]}/audits.json'
+    ticket_audit_url = f'{bbc().zendesk_base_url}tickets/{ticket["id"]}/comments.json'
+    req_audit = requests.get(ticket_audit_url, headers=bbc().zendesk_headers)
+    ticket_comments = req_audit.json()['comments']
+    comment_data_dict = []
+    for comment in ticket_comments:
+        if comment['type'] == "Comment":
+            if comment['public']:
+                comment_data = {
+                    "body": comment['body'],
+                    "timestamp": comment['created_at'],
+                    "is_public": comment['public']
+                }
+                comment_data_dict.append(comment_data)
+    return comment_data_dict
 
 
 if __name__ == '__main__':

@@ -33,7 +33,6 @@ class BuddyClassBlob:
         self.WebEx_teams_auth_key = os.getenv('WebEx_teams_auth_key')
         self.monday_auth_keys = os.getenv('monday_auth_keys')
 
-
         # Tests Bot and space:
         self.tqw_webex_token = os.getenv('tqw_webex_token')
         self.tamqueuewatcher_room_id = os.getenv('tamqueuewatcher_room_id')
@@ -89,16 +88,13 @@ class BuddyClassBlob:
         # Set the interval for the API to Zendesk call (in seconds)
         self.polling_interval = 60
 
-        # Ticket message label(s):
-        self.unassigned_label = "None Assigned"
-        self.not_set = "Not Set"
-        self.hour_trigger = "HOUR"
-        self.half_hour_trigger = "HALF_HOUR"
-        self.quarter_hour_trigger = "QUARTER_HOUR"
+        self.EMEA_region = ['GB', 'BE', 'PL', 'ES', 'PT']
+        self.US_region = ['CR', 'US', 'CA']
+        self.APAC_region = ['AU', 'CN', 'JP']
 
         self.tams_email_list = ['jalero@cisco.com', 'aparedez@cisco.com', 'anattwoo@cisco.com', 'dforcade@cisco.com',
-                     'kporzezr@cisco.com', 'nnwobodo@cisco.com', 'aely@cisco.com', 'arjraina@cisco.com',
-                     'ajavaher@cisco.com', 'brparnel@cisco.com', 'ccoral@cisco.com', 'kevhudso@cisco.com',
-                     'kvindas@cisco.com', 'mneibert@cisco.com', 'paulth2@cisco.com', 'pwijenay@cisco.com',
-                     'tarrashi@cisco.com', 'tingwa2@cisco.com', 'ugandhi@cisco.com', 'wgardeaz@cisco.com',
-                     'xiaoshya@cisco.com', 'yusito@cisco.com']
+                                'kporzezr@cisco.com', 'nnwobodo@cisco.com', 'aely@cisco.com', 'arjraina@cisco.com',
+                                'ajavaher@cisco.com', 'brparnel@cisco.com', 'ccoral@cisco.com', 'kevhudso@cisco.com',
+                                'kvindas@cisco.com', 'mneibert@cisco.com', 'paulth2@cisco.com', 'pwijenay@cisco.com',
+                                'tarrashi@cisco.com', 'tingwa2@cisco.com', 'ugandhi@cisco.com', 'wgardeaz@cisco.com',
+                                'xiaoshya@cisco.com', 'yusito@cisco.com']

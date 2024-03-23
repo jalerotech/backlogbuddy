@@ -29,7 +29,9 @@ def send_message_to_email(email, ticket):
     msg_to_send = f"### Ticket status change !!! ({ticket['ticket_id']}) \n " \
                   f"Ticket number: #[{ticket['ticket_id']}]({bbc().zend_agent_tickets_url}{ticket['ticket_id']}) \n " \
                   f"Subject: {ticket['subject']} \n " \
-                  f"Status: {ticket['status']}" \
+                  f"***Status***: {ticket['status']} \n " \
+                  f"***Updated at***: {ticket['updates'][-1]['timestamp']} \n "  \
+                  f"***Latest external update***: \n {ticket['updates'][-1]['body']}" \
 
     # Fetches and parses out the user_id using the user email as parameter.
     url = f'{bbc().webex_base_url}people'

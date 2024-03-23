@@ -44,7 +44,7 @@ def ret_tam_on_pto_list() -> list:
     return ooo_tams
 
 
-def is_tam_on_pto(tam_email) -> bool:
+def is_tam_on_pto(tam_email):
     logger.info("Cross-checking TAM email with ooo TAMs list -> STARTED")
     is_on_pto = False
     ooo_tams = ret_tam_on_pto_list()
@@ -52,7 +52,27 @@ def is_tam_on_pto(tam_email) -> bool:
         if tam_email == tam_status['email'][0]:
             is_on_pto = True
     logger.info("Cross-checking TAM email with ooo TAMs list -> COMPLETED")
-    return is_on_pto
+    return is_on_pto, ret_tam_region(tam_email)
+
+
+def ret_tam_region(tam_email):
+    logger.info("Returning TAM region label. - STARTED")
+    """
+    Returns TAM region information.
+    """
+    # Passing the email as a parameter -> this is needed for the @ symbol on the email be encoded with the "urllib.parse" lib.
+    params = {
+        "email": tam_email
+    }
+    url = f'{bbc().webex_base_url}people'
+    webex_resp = requests.get(url, params=params, headers=bbc().webex_headers)
+    status = json.loads(webex_resp.content)['items'][0]['status']
+    displayName = json.loads(webex_resp.content)['items'][0]['displayName']
+    email = json.loads(webex_resp.content)['items'][0]['emails']
+    region = json.loads(webex_resp.content)['items'][0]['addresses'][0]['country']
+    if region:
+        logger.info(f"Returning TAM {tam_email}'s region label. - COMPLETED")
+        return region
 
 
 if __name__ == '__main__':
