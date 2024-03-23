@@ -21,6 +21,9 @@ class BuddyClassBlob:
         self.zendesk_org_url = "https://opendns.zendesk.com/api/v2/organizations/"
         self.zendesk_user_url = "https://opendns.zendesk.com/api/v2/users/"
 
+        # WebEx base URL:
+        self.webex_base_url = 'https://webexapis.com/v1/'
+
         # Content type for request headers
         self.contentType = 'application/json'
 
@@ -93,3 +96,9 @@ class BuddyClassBlob:
         self.half_hour_trigger = "HALF_HOUR"
         self.quarter_hour_trigger = "QUARTER_HOUR"
 
+        self.tams_email_list = ['jalero@cisco.com', 'aparedez@cisco.com', 'anattwoo@cisco.com', 'dforcade@cisco.com',
+                     'kporzezr@cisco.com', 'nnwobodo@cisco.com', 'aely@cisco.com', 'arjraina@cisco.com',
+                     'ajavaher@cisco.com', 'brparnel@cisco.com', 'ccoral@cisco.com', 'kevhudso@cisco.com',
+                     'kvindas@cisco.com', 'mneibert@cisco.com', 'paulth2@cisco.com', 'pwijenay@cisco.com',
+                     'tarrashi@cisco.com', 'tingwa2@cisco.com', 'ugandhi@cisco.com', 'wgardeaz@cisco.com',
+                     'xiaoshya@cisco.com', 'yusito@cisco.com']

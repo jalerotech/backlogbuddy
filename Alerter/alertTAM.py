@@ -32,7 +32,8 @@ def send_message_to_email(email, ticket):
                   f"Status: {ticket['status']}" \
 
     # Fetches and parses out the user_id using the user email as parameter.
-    response = requests.get('https://api.ciscospark.com/v1/people', headers=headers, params=params)
+    url = f'{bbc().webex_base_url}people'
+    response = requests.get(url, headers=headers, params=params)
     user_data = response.json()
     if 'items' in user_data and len(user_data['items']) > 0:
         try:
@@ -43,7 +44,7 @@ def send_message_to_email(email, ticket):
                 'toPersonId': user_id,
                 'markdown': msg_to_send
             }
-            response = requests.post('https://api.ciscospark.com/v1/messages', headers=headers, json=data)
+            response = requests.post(f'{bbc().webex_base_url}messages', headers=headers, json=data)
             if response.status_code == 200:
                 logger.info("Message successfully to TAM.")
             else:
