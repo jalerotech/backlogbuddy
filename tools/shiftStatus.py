@@ -12,7 +12,7 @@ currentDateAndTime = datetime.now()
 today = currentDateAndTime.strftime('%A')
 
 
-def theatre_shift_time(region) -> bool:
+def theatre_shift_time(region):
     """
     Returns True or False when it checks time object -> hour
     :param region: label[EMEA, APAC, US]
