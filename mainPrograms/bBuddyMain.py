@@ -1,7 +1,7 @@
 from tamStatus.getTamStatus import ret_tam_on_pto_list, is_tam_on_pto
 from zendeskProcess.zenDesk import get_ticket_per_users
 from Alerter.alertTAM import send_message_to_email
-from tools.shiftStatus import theatre_shift_time, is_shift_over
+from tools.shiftStatus import is_theatre_active, is_shift_over
 from datetime import datetime
 from bbuddyClass import BuddyClassBlob as bbc
 import logging
@@ -38,7 +38,9 @@ def backlogBuddyMain():
                     # If TAM is on PTO no need to run the backlog buddy service for them, so they're skipped.
                     logger.info(f"Skipping TAM -> {tam_email} due to PTO status.")
                 else:
-                    if is_shift_over(tam_region, tam_email) is None or False:
+                    if is_shift_over(tam_region, tam_email):
+                        logger.info(f"Shift is over for TAM {tam_email} in {tam_region} region.")
+                    else:
                         logger.info(f'Shift still active for TAM {tam_email} in {tam_region} region.')
                         logger.info(f"TAM -> {tam_email}is not on PTO.")
                         logger.info(f"Checking for TAM -> {tam_email} tickets_data with 'open' status - STARTED.")
@@ -56,8 +58,6 @@ def backlogBuddyMain():
                                     # Logs the ticket_data as already handled to avoid any duplicates
                                     handled_tickets.append(ticket_data['ticket_id'])
                                     logger.info(f"Posting open ticket_data alert to TAM {tam_email} -> COMPLETED.")
-                    else:
-                        logger.info(f"Shift is over for TAM {tam_email} in {tam_region} region.")
             logger.info(f"Handled tickets_data so far -> {handled_tickets}")
         logger.info(f"Pausing for 10 seconds..")
         time.sleep(10)
