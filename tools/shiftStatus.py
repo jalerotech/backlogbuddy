@@ -35,7 +35,8 @@ def is_theatre_active(region):
                 return True
         if region == 'US':
             # shift ends at 02:00 UTC +1 time so backlog buddy should be quiet at this time
-            if currentDateAndTime.hour >= 2:
+            # Correcting this on the main codes.
+            if currentDateAndTime.hour == 2 and currentDateAndTime.min == 0:
                 return False
             else:
                 return True
