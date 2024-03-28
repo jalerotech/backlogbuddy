@@ -1,6 +1,9 @@
 import json
 import requests
 import logging
+
+from requests.exceptions import ProxyError
+
 from bbuddyClass import BuddyClassBlob as bbc
 
 logging.basicConfig(
@@ -54,6 +57,8 @@ def get_ticket_per_users(user_email) -> dict[list]:
         logger.info(f"Connection fails towards Zendesk with error {e.args}.")
     except TimeoutError as f:
         logger.info(f"Connection timed out towards Zendesk with error {f.args}.")
+    except ProxyError as f:
+        logger.info(f"Connection timed out with due to ProxyError {f.args}.")
 
 
 def get_ticket_updates(ticket):
@@ -77,6 +82,9 @@ def get_ticket_updates(ticket):
         logger.info(f"Connection fails towards Zendesk (comments URL) with error {e.args}.")
     except TimeoutError as f:
         logger.info(f"Connection timed out towards Zendesk (comments URL) with error {f.args}.")
+    except ProxyError as f:
+        logger.info(f"Connection timed out with due to ProxyError {f.args}.")
+        return None
 
 
 if __name__ == '__main__':

@@ -1,6 +1,9 @@
 import requests
 import logging
 import json
+
+from requests.exceptions import ProxyError
+
 from bbuddyClass import BuddyClassBlob as bbc
 
 logging.basicConfig(
@@ -31,4 +34,7 @@ def retPeopleData(tam_email) -> json:
         return None
     except TimeoutError as f:
         logger.info(f"Connection timed out towards {url} with error {f.args}.")
+        return None
+    except ProxyError as f:
+        logger.info(f"Connection timed out towards {url} with due to ProxyError {f.args}.")
         return None

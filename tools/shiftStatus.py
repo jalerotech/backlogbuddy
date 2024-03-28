@@ -23,23 +23,26 @@ def is_theatre_active(region):
     else:
         if region == "APAC":
             # shift ends at 09:00 UTC +1 time so backlog buddy should be quiet at this time
-            if currentDateAndTime.hour >= 9:
-                return False
-            else:
+            # if currentDateAndTime.hour >= 9:
+            if 1 <= currentDateAndTime.hour < 9:
                 return True
+            else:
+                return False
         if region == 'EMEA':
             # shift ends at 16:00 UTC +1 time so backlog buddy should be quiet at this time
-            if currentDateAndTime.hour >= 16:
-                return False
-            else:
+            # if currentDateAndTime.hour >= 16:
+            if 8 <= currentDateAndTime.hour < 16:
                 return True
+            else:
+                return False
         if region == 'US':
             # shift ends at 02:00 UTC +1 time so backlog buddy should be quiet at this time
             # Correcting this on the main codes.
-            if currentDateAndTime.hour == 2 and currentDateAndTime.min == 0:
-                return False
-            else:
+            # if currentDateAndTime.hour == 2 and currentDateAndTime.min == 0:
+            if (16 <= currentDateAndTime.hour <= 23) or (0 <= currentDateAndTime.hour < 2):
                 return True
+            else:
+                return False
 
 
 def is_shift_over(tam_region, tam_email) -> bool:
