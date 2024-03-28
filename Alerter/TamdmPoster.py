@@ -1,5 +1,8 @@
 import requests
 import logging
+
+from requests.exceptions import ProxyError
+
 from bbuddyClass import BuddyClassBlob as bbc
 
 logging.basicConfig(
@@ -37,3 +40,6 @@ def sendDMToTam(msg_to_send, user_id):
         logger.info(f"Connection fails towards {url} with error {e.args}.")
     except TimeoutError as f:
         logger.info(f"Connection timed out towards {url} with error {f.args}.")
+    except ProxyError as f:
+        logger.info(f"Connection timed out with due to ProxyError {f.args}.")
+        return None
