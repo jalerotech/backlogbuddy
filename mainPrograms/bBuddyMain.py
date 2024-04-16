@@ -50,9 +50,9 @@ def backlogBuddy(email):
                         if ticket_data['ticket_id'] not in handled_tickets:
                             logger.info(f"Posting open ticket_data alert to TAM {email} -> STARTED.")
                             # Sends the message to the TAM's email - Direct message - on WEbEx teams
-                            if email == 'jalero@cisco.com':
-                                send_message_to_email(email, ticket_data, tam_region['user_id'])
-                            # send_message_to_email(email, ticket_data, tam_region['user_id'])
+                            # if email == 'jalero@cisco.com':
+                            #     send_message_to_email(email, ticket_data, tam_region['user_id'])
+                            send_message_to_email(email, ticket_data, tam_region['user_id'])
                             # Logs the ticket_data as already handled to avoid any duplicates
                             handled_tickets.append(ticket_data['ticket_id'])
                             logger.info(f"Posting open ticket_data alert to TAM {email} -> COMPLETED.")
