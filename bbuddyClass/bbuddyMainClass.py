@@ -8,11 +8,20 @@ if os.path.exists(env_path):
 else:
     pass
 
+import logging
+from datetime import datetime
+logging.basicConfig(
+    format='%(asctime)s %(levelname)s %(message)s',
+    level=logging.INFO,
+    datefmt='%Y-%m-%d %H:%M:%S')
+
 
 class BuddyClassBlob:
 
     def __init__(self):
-
+        self.logger = logging.getLogger('ShifttimeData_bb')
+        self.currentDateAndTime = datetime.now()
+        self.today = self.currentDateAndTime.strftime('%A')
         # Zendesk Agent Base URL -> Used by agents to access tickets on Zendesk
         self.zend_agent_tickets_url = f"https://opendns.zendesk.com/agent/tickets/"
         self.zendesk_ticket_base_url = f"https://opendns.zendesk.com/api/v2/tickets/"
@@ -98,3 +107,29 @@ class BuddyClassBlob:
                                 'kvindas@cisco.com', 'mneibert@cisco.com', 'paulth2@cisco.com', 'pwijenay@cisco.com',
                                 'tarrashi@cisco.com', 'tingwa2@cisco.com', 'ugandhi@cisco.com', 'wgardeaz@cisco.com',
                                 'xiaoshya@cisco.com', 'yusito@cisco.com']
+
+    def weekendAlertData(self):
+        # Global weekend alert!
+        if (self.currentDateAndTime.hour == 2) and (self.currentDateAndTime.minute == 0) and (
+                self.today == "Saturday"):
+            self.logger.info('Getting weekend time and status/message...')
+            shift_data = {
+                "theatre": "All",
+                "shift_time": "20:00 EST/EDT, 02:00 CEST and 11:00 AEDT",
+                "status": "Saturday"
+            }
+            return shift_data
+        if self.today == "Sunday":
+            shift_data = {
+                "theatre": "All",
+                "status": "Sunday"
+            }
+            return shift_data
+
+    def is_weekend(self):
+        if (self.today == "Saturday" and (self.currentDateAndTime.hour > 2 and self.currentDateAndTime.minute > 0)) or (
+                self.today == "Sunday"):
+            self.logger.info("Weekend detected, returning True")
+            return True
+        else:
+            return False
