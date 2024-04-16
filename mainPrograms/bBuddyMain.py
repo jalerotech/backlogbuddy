@@ -4,6 +4,7 @@ from Alerter.alertTAM import send_message_to_email
 from tools.shiftStatus import is_shift_over
 from datetime import datetime
 from bbuddyClass import BuddyClassBlob as bbc
+from tools.shiftStatusClass import ShiftStatus as sSc
 import logging
 import time
 logging.basicConfig(
@@ -24,8 +25,7 @@ def backlogBuddy(email):
     Runs the backlog buddy program with the tam email address as input parameter.
     :return:
     """
-    if (today == "Saturday" and (currentDateAndTime.hour > 2 and currentDateAndTime.minute > 0)) or (
-            today == "Sunday"):
+    if bbc().is_weekend():
         logger.info("Weekend is here, waiting for new week to begin.")
     else:
         logger.info("Running BackLog Buddy Main program")
@@ -35,7 +35,8 @@ def backlogBuddy(email):
             # If TAM is on PTO no need to run the backlog buddy service for them, so they're skipped.
             logger.info(f"Skipping TAM -> {email} due to PTO status.")
         else:
-            if is_shift_over(tam_region['region'], email):
+            if sSc().is_shift_over(tam_region['region'], email):
+            # if is_shift_over(tam_region['region'], email):
                 logger.info(f"Shift is over for TAM {email} in {tam_region['region']} region.")
             else:
                 logger.info(f"Shift still active for TAM {email} in {tam_region['region']} region.")
